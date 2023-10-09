@@ -1,3 +1,5 @@
+// Package doublyLinkedList provides an implementation of a doubly linked list
+// data structure.
 package doublyLinkedList
 
 import (
@@ -6,18 +8,21 @@ import (
 	"strings"
 )
 
+// Node represents a node in the doubly linked list.
 type Node[T any] struct {
 	next *Node[T]
 	prev *Node[T]
 	val  T
 }
 
+// DoublyLinkedList represents the doubly linked list data structure.
 type DoublyLinkedList[T any] struct {
 	size int
 	head *Node[T]
 	tail *Node[T]
 }
 
+// NewDoublyLinkedList creates a new instance of DoublyLinkedList.
 func NewDoublyLinkedList[T any]() *DoublyLinkedList[T] {
 	return &DoublyLinkedList[T]{
 		size: 0,
@@ -26,6 +31,7 @@ func NewDoublyLinkedList[T any]() *DoublyLinkedList[T] {
 	}
 }
 
+// NewNode creates a new instance of Node.
 func NewNode[T any](data T, prev *Node[T], next *Node[T]) *Node[T] {
 	return &Node[T]{
 		next: next,
@@ -34,10 +40,12 @@ func NewNode[T any](data T, prev *Node[T], next *Node[T]) *Node[T] {
 	}
 }
 
+// Size returns the size of the doubly linked list.
 func (dl *DoublyLinkedList[T]) Size() int {
 	return dl.size
 }
 
+// Clear clears the doubly linked list.
 func (dl *DoublyLinkedList[T]) Clear() {
 	trav := dl.head
 	for trav != nil {
@@ -52,14 +60,17 @@ func (dl *DoublyLinkedList[T]) Clear() {
 	dl.size = 0
 }
 
+// IsEmpty checks if the doubly linked list is empty.
 func (dl *DoublyLinkedList[T]) IsEmpty() bool {
 	return dl.size == 0
 }
 
+// Add adds an element to the doubly linked list.
 func (dl *DoublyLinkedList[T]) Add(elem T) {
 	dl.AddLast(elem)
 }
 
+// AddFirst adds an element to the beginning of the doubly linked list.
 func (dl *DoublyLinkedList[T]) AddFirst(elem T) {
 	if dl.IsEmpty() {
 		dl.head = NewNode[T](elem, nil, nil)
@@ -73,6 +84,7 @@ func (dl *DoublyLinkedList[T]) AddFirst(elem T) {
 
 }
 
+// AddLast adds an element to the end of the doubly linked list.
 func (dl *DoublyLinkedList[T]) AddLast(elem T) {
 	if dl.IsEmpty() {
 		dl.head = NewNode[T](elem, nil, nil)
@@ -85,6 +97,7 @@ func (dl *DoublyLinkedList[T]) AddLast(elem T) {
 	dl.size += 1
 }
 
+// AddAt adds an element at a specific index in the doubly linked list.
 func (dl *DoublyLinkedList[T]) AddAt(index int, val T) {
 	if index < 0 || index > dl.size {
 		log.Fatal("Illegal Index")
@@ -113,6 +126,7 @@ func (dl *DoublyLinkedList[T]) AddAt(index int, val T) {
 
 }
 
+// ToString returns a string representation of the doubly linked list.
 func (dl *DoublyLinkedList[T]) ToString() string {
 	if dl.size == 0 {
 		return "[]"

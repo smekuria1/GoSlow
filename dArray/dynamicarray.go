@@ -8,6 +8,7 @@ import (
 	"golang.org/x/exp/slices"
 )
 
+// DynamicArray is a struct that represents a dynamic array.
 type DynamicArray struct {
 	array    []int
 	len      int
@@ -15,6 +16,8 @@ type DynamicArray struct {
 	size     int
 }
 
+// NewDynamicArray creates a new dynamic array with the given capacity.
+// If no capacity is given, it defaults to 16.
 func NewDynamicArray(args ...int) *DynamicArray {
 	dynamicArray := &DynamicArray{
 		array:    make([]int, 0, 16),
@@ -35,22 +38,27 @@ func NewDynamicArray(args ...int) *DynamicArray {
 	return dynamicArray
 }
 
+// Get returns the element at the given index.
 func (d *DynamicArray) Get(index int) int {
 	return d.array[index]
 }
 
+// Set sets the element at the given index to the given value.
 func (d *DynamicArray) Set(index int, elem int) {
 	d.array[index] = elem
 }
 
+// IsEmpty returns true if the dynamic array is empty.
 func (d *DynamicArray) IsEmpty() bool {
 	return d.len == 0
 }
 
+// Size returns the number of elements in the dynamic array.
 func (d *DynamicArray) Size() int {
 	return d.len
 }
 
+// Add adds the given element to the dynamic array.
 func (d *DynamicArray) Add(elem int) {
 	if (d.len + 1) >= d.capacity {
 		if d.capacity == 0 {
@@ -69,12 +77,14 @@ func (d *DynamicArray) Add(elem int) {
 	d.len += 1
 }
 
+// RemoveAt removes the element at the given index from the dynamic array.
 func (d *DynamicArray) RemoveAt(index int) {
 	d.array = append(d.array[:index], d.array[index+1:]...)
 	d.len--
 	d.capacity--
 }
 
+// Remove removes the given element from the dynamic array.
 func (d *DynamicArray) Remove(elem int) error {
 	for i := 0; i < d.len; i++ {
 		if d.array[i] == elem {
@@ -86,6 +96,7 @@ func (d *DynamicArray) Remove(elem int) error {
 	return fmt.Errorf("element %v not found", elem)
 }
 
+// ToString returns a string representation of the dynamic array.
 func (d *DynamicArray) ToString() string {
 	if d.len == 0 {
 		return "[]"
@@ -99,6 +110,7 @@ func (d *DynamicArray) ToString() string {
 	return builder.String()
 }
 
+// Reverse reverses the order of the elements in the dynamic array.
 func (d *DynamicArray) Reverse() {
 	for i := 0; i < d.len/2; i++ {
 		tmp := d.array[i]
@@ -107,6 +119,7 @@ func (d *DynamicArray) Reverse() {
 	}
 }
 
+// Qsort sorts the dynamic array using the quicksort algorithm.
 func (d *DynamicArray) Qsort() {
 	quickSortHelper(d.array, 0, d.len-1)
 }
