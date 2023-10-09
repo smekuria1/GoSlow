@@ -87,8 +87,10 @@ func (dl *DoublyLinkedList[T]) AddFirst(elem T) {
 // AddLast adds an element to the end of the doubly linked list.
 func (dl *DoublyLinkedList[T]) AddLast(elem T) {
 	if dl.IsEmpty() {
-		dl.head = NewNode[T](elem, nil, nil)
-		dl.tail = NewNode[T](elem, nil, nil)
+		newNode := NewNode[T](elem, dl.tail, nil)
+
+		dl.head = newNode
+		dl.tail = newNode
 	} else {
 		newNode := NewNode[T](elem, dl.tail, nil)
 		dl.tail.next = newNode

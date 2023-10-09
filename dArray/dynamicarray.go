@@ -1,3 +1,5 @@
+// Package darray provides an implementation of a dynamic array
+// data structure.
 package darray
 
 import (
