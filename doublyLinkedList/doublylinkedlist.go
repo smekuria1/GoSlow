@@ -5,6 +5,7 @@ package doublyLinkedList
 import (
 	"fmt"
 	"log"
+	"reflect"
 	"strings"
 )
 
@@ -32,11 +33,11 @@ func NewDoublyLinkedList[T any]() *DoublyLinkedList[T] {
 }
 
 // NewNode creates a new instance of Node.
-func NewNode[T any](data T, prev *Node[T], next *Node[T]) *Node[T] {
+func NewNode[T any](val T, prev *Node[T], next *Node[T]) *Node[T] {
 	return &Node[T]{
 		next: next,
 		prev: prev,
-		val:  data,
+		val:  val,
 	}
 }
 
@@ -142,13 +143,188 @@ func (dl *DoublyLinkedList[T]) ToString() string {
 		if trav.next != nil {
 			builder.WriteString(",")
 		}
-		log.Printf("Trav %v", trav)
-		log.Printf("Trav prev: %v", trav.prev)
-		log.Printf("Trav next: %v", trav.next)
-
 		trav = trav.next
 
 	}
 	builder.WriteString("]")
 	return builder.String()
+}
+
+// PeekFirst Check the value of the first node if exists, 0(1)
+func (dl *DoublyLinkedList[T]) PeekFirst() T {
+	if dl.IsEmpty() {
+		log.Fatal("Empty list")
+	}
+
+	return dl.head.val
+}
+
+// PeekLast Check the value of the last node if it exists, 0(1)
+func (dl *DoublyLinkedList[T]) PeekLast() T {
+	if dl.IsEmpty() {
+		log.Fatal("Empty list")
+	}
+
+	return dl.tail.val
+}
+
+// RemoveFirst removes the first value at head of the LinkedList
+func (dl *DoublyLinkedList[T]) RemoveFirst() T {
+	if dl.IsEmpty() {
+		log.Fatal("Empty List")
+	}
+
+	val := dl.head.val
+	dl.head = dl.head.next
+
+	dl.size -= 1
+
+	if dl.IsEmpty() {
+		dl.tail = nil
+	} else {
+		dl.head.prev = nil
+	}
+
+	return val
+}
+
+// RemoveLast removes the last value at the tail of the Linked List, O(1)
+func (dl *DoublyLinkedList[T]) RemoveLast() T {
+	if dl.IsEmpty() {
+		log.Fatal("Empty List")
+	}
+
+	val := dl.tail.val
+	dl.tail = dl.tail.prev
+	dl.size -= 1
+	if dl.IsEmpty() {
+		dl.head = nil
+	} else {
+		dl.tail.next = nil
+	}
+
+	return val
+}
+
+// Remove removes an aribitrary node from the Linked List, 0(1) INTERNAL
+func (dl *DoublyLinkedList[T]) remove(node Node[T]) T {
+	if node.prev == nil {
+		return dl.RemoveFirst()
+	}
+	if node.next == nil {
+		return dl.RemoveLast()
+	}
+	node.next.prev = node.prev
+	node.prev.next = node.next
+
+	val := node.val
+
+	// Not cleaning up memory I dont fully understand the GO GC and how
+	// it deals with freeing up the node value when it gets deleted
+	//node.val = nil
+
+	node.prev = nil
+	node.next = nil
+
+	dl.size -= 1
+	return val
+}
+
+// RemoveAt removes a node at particular index O(n)
+func (dl *DoublyLinkedList[T]) RemoveAt(index int) T {
+
+	if index < 0 || index >= dl.size {
+		log.Fatal("Illegal Index")
+	}
+
+	var i int
+	var trav *Node[T]
+
+	if index < dl.size/2 {
+		trav = dl.head
+		for i = 0; i != index; i++ {
+			trav = trav.next
+		}
+	} else {
+		trav = dl.head
+		for i := dl.size - 1; i != index; i-- {
+			trav = trav.prev
+		}
+	}
+
+	return dl.remove(*trav)
+}
+
+// Since I am not enforcing types for added items i am writing a catch all compare function
+// janky chat gpt code sry
+// type Comparable interface {
+// 	Compare(interface{}) int
+// }
+// func compareValues(a, b interface{}) (int, error) {
+//     // Use reflection to get the types of a and b.
+//     typeOfA := reflect.TypeOf(a)
+//     typeOfB := reflect.TypeOf(b)
+//     // Check if the types are comparable.
+//     if typeOfA != typeOfB {
+//         return 0, fmt.Errorf("types are not comparable: %s and %s", typeOfA, typeOfB)
+//     }
+//     // Check if the types implement the Comparable interface.
+//     compareMethod := reflect.ValueOf(a).MethodByName("Compare")
+//     if !compareMethod.IsValid() {
+//         return 0, fmt.Errorf("Compare method not found for type %s", typeOfA)
+//     }
+//     // Call the Compare method on the values.
+//     result := compareMethod.Call([]reflect.Value{reflect.ValueOf(b)})
+//     // Extract the result as an int.
+//     if len(result) > 0 {
+//         if result[0].Kind() == reflect.Int {
+//             return int(result[0].Int()), nil
+//         }
+//     }
+//     return 0, fmt.Errorf("comparison result not as expected")
+// }
+
+// slightly better compare using reflect
+func isEqual(x, y interface{}) bool {
+	return reflect.DeepEqual(x, y)
+}
+
+// // RemoveVal removes a node by its value O(n)
+// func (dl *DoublyLinkedList[T]) RemoveVal(val T) bool {
+// 	trav := dl.head
+
+// 	// Not sure about allowing nil types to be in the list dont fully understand generics yet
+// 	if reflect.TypeOf(val) == nil {
+// 		for trav = dl.head; trav != nil; trav = trav.next {
+// 			if reflect.TypeOf(trav.val) == nil {
+// 				dl.remove(*trav)
+// 				return true
+// 			}
+
+// 		}
+// 	} else {
+// 		for trav = dl.head; trav != nil; trav = trav.next {
+// 			if isEqual(val, trav.val) {
+// 				dl.remove(*trav)
+// 				return true
+// 			}
+// 		}
+// 	}
+// 	return false
+// }
+
+// RemoveVal removes a node by its value O(n) relies on reflect
+func (dl *DoublyLinkedList[T]) RemoveVal(val T) bool {
+	trav := dl.head
+
+	// Iterate through the list to find the node with the specified value.
+	for trav != nil {
+		if isEqual(val, trav.val) { // Use direct comparison to check if values are equal.
+			dl.remove(*trav)
+			return true
+		}
+		trav = trav.next
+	}
+
+	return false // Value not found in the list.
 }

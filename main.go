@@ -16,7 +16,7 @@ func main() {
 	// 	i += 1
 	// }
 	dl := doublyLinkedList.NewDoublyLinkedList[int]()
-	for i < 4 {
+	for i < 10 {
 		num := rand.Intn(1000-0) + 0
 		dl.Add(num)
 		fmt.Printf("Added num: %v\n", num)
@@ -25,7 +25,8 @@ func main() {
 	}
 	dl.AddLast(200)
 	fmt.Println("Size: ", dl.Size())
-
+	fmt.Println("LinkedList", dl.ToString())
+	fmt.Println(dl.RemoveVal(9901))
 	fmt.Println("LinkedList", dl.ToString())
 
 }
