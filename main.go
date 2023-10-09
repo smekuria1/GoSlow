@@ -5,7 +5,7 @@ import (
 	"math/rand"
 
 	// darray "example.com/goslow/darray"
-	doublyLinkedList "example.com/GoSlow/doublyLinkedList"
+	doublyLinkedList "github.com/smekuria1/GoSlow/doublyLinkedList"
 )
 
 func main() {

@@ -1,4 +1,4 @@
-module example.com/GoSlow
+module github.com/smekuria1/GoSlow
 
 go 1.21.1
 
