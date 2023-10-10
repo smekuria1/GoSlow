@@ -31,8 +31,8 @@ func NewDynamicArray(args ...int) *DynamicArray {
 	if len(args) > 0 {
 		if args[0] < 0 {
 			log.Println("Illegal capacity defaulting to size 16")
+			args[0] = 16
 		}
-		args[0] = 16
 		dynamicArray.capacity = args[0]
 		dynamicArray.array = make([]int, 0, args[0])
 	}
@@ -71,7 +71,7 @@ func (d *DynamicArray) Add(elem int) {
 
 		bigarray := make([]int, d.capacity)
 		copy(bigarray, d.array)
-		log.Println("Expanding capacity: ", d.capacity)
+		//log.Println("Expanding capacity: ", d.capacity)
 		d.array = bigarray
 
 	}
@@ -121,11 +121,22 @@ func (d *DynamicArray) Reverse() {
 	}
 }
 
+// Contains returns true if the dynamic array contains the given element.
+func (d *DynamicArray) Contains(elem int) bool {
+	for i := 0; i < d.len; i++ {
+		if d.array[i] == elem {
+			return true
+		}
+	}
+	return false
+}
+
 // Qsort sorts the dynamic array using the quicksort algorithm.
 func (d *DynamicArray) Qsort() {
 	quickSortHelper(d.array, 0, d.len-1)
 }
 
+// not tracked for testing
 func quickSortHelper(array []int, first int, last int) {
 	if first < last {
 		splitpoint := partition(array, first, last)
