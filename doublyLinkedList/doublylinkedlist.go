@@ -328,3 +328,64 @@ func (dl *DoublyLinkedList[T]) RemoveVal(val T) bool {
 
 	return false // Value not found in the list.
 }
+
+// IndexOf find the index of a particular value in the linked list, O(n)
+func (dl *DoublyLinkedList[T]) IndexOf(elem T) int {
+	index := 0
+	trav := dl.head
+
+	for trav != nil {
+		if isEqual(trav.val, elem) {
+			return index
+		}
+		index++
+		trav = trav.next
+	}
+	return -1
+}
+
+// Contains check if the value is contained within the linked list
+func (dl *DoublyLinkedList[T]) Contains(elem T) bool {
+	return dl.IndexOf(elem) != -1
+}
+
+// Get returns the value at a particular index, O(n)
+func (dl *DoublyLinkedList[T]) Get(index int) T {
+	if index < 0 || index >= dl.size {
+		log.Fatal("Illegal Index")
+	}
+
+	var i int
+	var trav *Node[T]
+
+	if index < dl.size/2 {
+		trav = dl.head
+		for i = 0; i != index; i++ {
+			trav = trav.next
+		}
+	} else {
+		trav = dl.head
+		for i := dl.size - 1; i != index; i-- {
+			trav = trav.prev
+		}
+	}
+
+	return trav.val
+}
+
+// Reverse reverses the linked list in place
+func (dl *DoublyLinkedList[T]) Reverse() {
+	trav := dl.head
+	var temp *Node[T]
+
+	for trav != nil {
+		temp = trav.prev
+		trav.prev = trav.next
+		trav.next = temp
+		trav = trav.prev
+	}
+
+	if temp != nil {
+		dl.head = temp.prev
+	}
+}
