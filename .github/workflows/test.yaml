@@ -1,0 +1,31 @@
+name: Go Test
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    name: Run Go Tests
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        package:
+          - dArray
+          - doublyLinkedList
+          - queue
+          - stack
+          # Add more packages as needed
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.21.1 # Replace with your desired Go version
+
+      - name: Run Tests
+        run: go test ./$package/...
+        env:
+          package: ${{ matrix.package }}

@@ -141,7 +141,7 @@ func (dl *DoublyLinkedList[T]) ToString() string {
 	for trav != nil {
 		builder.WriteString(fmt.Sprintf("%v", trav.val))
 		if trav.next != nil {
-			builder.WriteString(",")
+			builder.WriteString(", ")
 		}
 		trav = trav.next
 
@@ -246,7 +246,8 @@ func (dl *DoublyLinkedList[T]) RemoveAt(index int) T {
 			trav = trav.next
 		}
 	} else {
-		trav = dl.head
+		trav = dl.tail
+
 		for i := dl.size - 1; i != index; i-- {
 			trav = trav.prev
 		}
