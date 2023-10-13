@@ -344,3 +344,44 @@ func TestDoublyLinkedList_IndexOf(t *testing.T) {
 		})
 	}
 }
+
+func TestDoublyLinkedList_Contains(t *testing.T) {
+	type args struct {
+		elem int
+	}
+	tests := []struct {
+		name string
+		d    *DoublyLinkedList[int]
+		args args
+		want bool
+	}{
+		{testNameHelper("Contains"), get_set_Helper(10), args{2}, true},
+		{testNameHelper("ContainsFalse"), get_set_Helper(10), args{200}, false},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := tt.d.Contains(tt.args.elem); got != tt.want {
+				t.Errorf("%s %v, want %v", testErrorNameHelper("Contains"), got, tt.want)
+			}
+		})
+	}
+}
+
+func TestDoublyLinkedList_Reverse(t *testing.T) {
+	tests := []struct {
+		name string
+		d    *DoublyLinkedList[int]
+		want string
+	}{
+		{testNameHelper("Reverse"), get_set_Helper(10), "[9, 8, 7, 6, 5, 4, 3, 2, 1, 0]"},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			tt.d.Reverse()
+			if got := tt.d.ToString(); got != tt.want {
+				t.Errorf("%s %v, want %v", testErrorNameHelper("Reverse"), got, tt.want)
+			}
+		})
+	}
+}
