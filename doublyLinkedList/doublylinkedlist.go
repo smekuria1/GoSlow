@@ -3,6 +3,7 @@
 package doublyLinkedList
 
 import (
+	"errors"
 	"fmt"
 	"log"
 	"reflect"
@@ -101,18 +102,18 @@ func (dl *DoublyLinkedList[T]) AddLast(elem T) {
 }
 
 // AddAt adds an element at a specific index in the doubly linked list.
-func (dl *DoublyLinkedList[T]) AddAt(index int, val T) {
+func (dl *DoublyLinkedList[T]) AddAt(index int, val T) error {
 	if index < 0 || index > dl.size {
-		log.Fatal("Illegal Index")
+		return errors.New("illegal index")
 	}
 	if index == 0 {
 		dl.AddFirst(val)
-		return
+		return nil
 	}
 
 	if index == dl.size {
 		dl.AddLast(val)
-		return
+		return nil
 	}
 
 	temp := dl.head
@@ -126,6 +127,7 @@ func (dl *DoublyLinkedList[T]) AddAt(index int, val T) {
 	temp.next = newNode
 
 	dl.size += 1
+	return nil
 
 }
 
@@ -153,7 +155,7 @@ func (dl *DoublyLinkedList[T]) ToString() string {
 // PeekFirst Check the value of the first node if exists, 0(1)
 func (dl *DoublyLinkedList[T]) PeekFirst() T {
 	if dl.IsEmpty() {
-		log.Fatal("Empty list")
+		log.Fatal("Empty List")
 	}
 
 	return dl.head.val
@@ -365,7 +367,7 @@ func (dl *DoublyLinkedList[T]) Get(index int) T {
 			trav = trav.next
 		}
 	} else {
-		trav = dl.head
+		trav = dl.tail
 		for i := dl.size - 1; i != index; i-- {
 			trav = trav.prev
 		}

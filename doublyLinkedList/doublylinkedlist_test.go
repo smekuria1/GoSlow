@@ -5,6 +5,7 @@
 package doublyLinkedList
 
 import (
+	"errors"
 	"fmt"
 	"reflect"
 	"strings"
@@ -145,16 +146,19 @@ func TestDoublyLinkedList_AddFirst(t *testing.T) {
 		name string
 		d    *DoublyLinkedList[int]
 		args args
+		want int
 	}{
 		//TODO: Add test cases
-		{testNameHelper("AddFirst"), get_set_Helper(10), args{val: 10}},
+		{testNameHelper("AddFist"), get_set_Helper(10), args{2}, 2},
+		{testNameHelper("AddFirst"), NewDoublyLinkedList[int](), args{10}, 10},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			tt.d.AddFirst(tt.args.val)
-			if tt.d.Size() != 11 {
-				t.Errorf("%s %v, want %v", testErrorNameHelper("AddFirst"), tt.d.Size(), 11)
+			if got := tt.d.PeekFirst(); got != tt.want {
+				t.Errorf("%s %v, want %v,", testErrorNameHelper("AddFirst"), got, tt.want)
 			}
+
 		})
 	}
 }
@@ -168,16 +172,26 @@ func TestDoublyLinkedList_AddAt(t *testing.T) {
 		name string
 		d    *DoublyLinkedList[int]
 		args args
+		want error
 	}{
 		//TODO: Add test cases
-		{testNameHelper("AddAt"), get_set_Helper(10), args{index: 5, val: 10}},
+		{testNameHelper("AddAt"), get_set_Helper(10), args{5, 10}, nil},
+		{testNameHelper("AddAt"), get_set_Helper(10), args{0, 100}, nil},
+		{testNameHelper("AddAt"), get_set_Helper(10), args{10, 100}, nil},
+		{testNameHelper("AddAt"), get_set_Helper(10), args{-1, 100}, errors.New("illegal index")},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			tt.d.AddAt(tt.args.index, tt.args.val)
+			err := tt.d.AddAt(tt.args.index, tt.args.val)
 			if tt.d.IndexOf(tt.args.val) != tt.args.index {
-				t.Errorf("%s = %v, want %v", testErrorNameHelper("AddAt"), tt.d.IndexOf(tt.args.val), tt.args.index)
+				t.Errorf("%s %v, want %v", testErrorNameHelper("AddAt"), tt.d.IndexOf(tt.args.val), tt.args.index)
 			}
+			if err != nil {
+				if errors.Is(err, tt.want) {
+					t.Errorf("%s %v, want %v,", testErrorNameHelper("AddAt"), err, tt.want)
+				}
+			}
+
 		})
 	}
 }
@@ -189,6 +203,7 @@ func TestDoublyLinkedList_ToString(t *testing.T) {
 		want string
 	}{
 		{testNameHelper("ToString"), get_set_Helper(10), "[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]"},
+		{testNameHelper("ToString"), NewDoublyLinkedList[int](), "[]"},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -278,6 +293,7 @@ func TestDoublyLinkedList_RemoveAt(t *testing.T) {
 		want int
 	}{
 		{testNameHelper("RemoveAt"), get_set_Helper(10), args{5}, 5},
+		{testNameHelper("RemoveAt"), get_set_Helper(10), args{2}, 2},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -384,4 +400,28 @@ func TestDoublyLinkedList_Reverse(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestDoublyLinkedList_Get(t *testing.T) {
+	type args struct {
+		index int
+	}
+	tests := []struct {
+		name string
+		d    *DoublyLinkedList[int]
+		args args
+		want int
+	}{
+		{testNameHelper("Get"), get_set_Helper(10), args{3}, 3},
+		{testNameHelper("Get"), get_set_Helper(10), args{7}, 7},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := tt.d.Get(tt.args.index); got != tt.want {
+				t.Errorf("%s %v, want %v", testErrorNameHelper("Get"), got, tt.want)
+			}
+		})
+	}
+
 }
