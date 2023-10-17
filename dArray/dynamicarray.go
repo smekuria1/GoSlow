@@ -11,7 +11,7 @@ import (
 )
 
 // DynamicArray is a struct that represents a dynamic array.
-type DynamicArray struct {
+type DynamicArray[T comparable] struct {
 	array    []int
 	len      int
 	capacity int
@@ -20,8 +20,8 @@ type DynamicArray struct {
 
 // NewDynamicArray creates a new dynamic array with the given capacity.
 // If no capacity is given, it defaults to 16.
-func NewDynamicArray(args ...int) *DynamicArray {
-	dynamicArray := &DynamicArray{
+func NewDynamicArray[T comparable](args ...int) *DynamicArray[T] {
+	dynamicArray := &DynamicArray[T]{
 		array:    make([]int, 0, 16),
 		len:      0,
 		capacity: 16,
@@ -41,27 +41,27 @@ func NewDynamicArray(args ...int) *DynamicArray {
 }
 
 // Get returns the element at the given index.
-func (d *DynamicArray) Get(index int) int {
+func (d *DynamicArray[T]) Get(index int) int {
 	return d.array[index]
 }
 
 // Set sets the element at the given index to the given value.
-func (d *DynamicArray) Set(index int, elem int) {
+func (d *DynamicArray[T]) Set(index int, elem int) {
 	d.array[index] = elem
 }
 
 // IsEmpty returns true if the dynamic array is empty.
-func (d *DynamicArray) IsEmpty() bool {
+func (d *DynamicArray[T]) IsEmpty() bool {
 	return d.len == 0
 }
 
 // Size returns the number of elements in the dynamic array.
-func (d *DynamicArray) Size() int {
+func (d *DynamicArray[T]) Size() int {
 	return d.len
 }
 
 // Add adds the given element to the dynamic array.
-func (d *DynamicArray) Add(elem int) {
+func (d *DynamicArray[T]) Add(elem int) {
 	if (d.len + 1) >= d.capacity {
 		if d.capacity == 0 {
 			d.capacity = 1
@@ -80,14 +80,14 @@ func (d *DynamicArray) Add(elem int) {
 }
 
 // RemoveAt removes the element at the given index from the dynamic array.
-func (d *DynamicArray) RemoveAt(index int) {
+func (d *DynamicArray[T]) RemoveAt(index int) {
 	d.array = append(d.array[:index], d.array[index+1:]...)
 	d.len--
 	d.capacity--
 }
 
 // Remove removes the given element from the dynamic array.
-func (d *DynamicArray) Remove(elem int) error {
+func (d *DynamicArray[T]) Remove(elem int) error {
 	for i := 0; i < d.len; i++ {
 		if d.array[i] == elem {
 			d.RemoveAt(i)
@@ -99,7 +99,7 @@ func (d *DynamicArray) Remove(elem int) error {
 }
 
 // ToString returns a string representation of the dynamic array.
-func (d *DynamicArray) ToString() string {
+func (d *DynamicArray[T]) ToString() string {
 	if d.len == 0 {
 		return "[]"
 	}
@@ -113,7 +113,7 @@ func (d *DynamicArray) ToString() string {
 }
 
 // Reverse reverses the order of the elements in the dynamic array.
-func (d *DynamicArray) Reverse() {
+func (d *DynamicArray[T]) Reverse() {
 	for i := 0; i < d.len/2; i++ {
 		tmp := d.array[i]
 		d.array[i] = d.array[d.len-i-1]
@@ -122,7 +122,7 @@ func (d *DynamicArray) Reverse() {
 }
 
 // Contains returns true if the dynamic array contains the given element.
-func (d *DynamicArray) Contains(elem int) bool {
+func (d *DynamicArray[T]) Contains(elem int) bool {
 	for i := 0; i < d.len; i++ {
 		if d.array[i] == elem {
 			return true
@@ -132,7 +132,7 @@ func (d *DynamicArray) Contains(elem int) bool {
 }
 
 // Qsort sorts the dynamic array using the quicksort algorithm.
-func (d *DynamicArray) Qsort() {
+func (d *DynamicArray[T]) Qsort() {
 	quickSortHelper(d.array, 0, d.len-1)
 }
 
