@@ -27,6 +27,10 @@ func NewBinaryHeapPQ[T comparable](args ...int) *BinaryHeapPQ[T] {
 	}
 }
 
+// TODO: refactor this method
+//
+//	doesnt maintain heap invariant
+//
 // NewHeapifiedBinaryPQ returns a new instance of BinaryHeapPQ[T] with the given elements.
 // The elements are heapified using the binary heap algorithm.
 func (pq *BinaryHeapPQ[T]) NewHeapifiedBinaryPQ(elems []int) *BinaryHeapPQ[T] {
