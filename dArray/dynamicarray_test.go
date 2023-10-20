@@ -31,7 +31,7 @@ func TestNewDynamicArray(t *testing.T) {
 		})
 	}
 }
-func get_set_Helper(size int) *DynamicArray[int] {
+func Get_set_helper(size int) *DynamicArray[int] {
 	dynamicArray := NewDynamicArray[int](size)
 	for i := 0; i < 10; i++ {
 		dynamicArray.Add(i)
@@ -58,7 +58,7 @@ func TestDynamicArray_Get(t *testing.T) {
 		// create an array with 10 elements and insert 10 elements
 		// get the 5th element and check if it is the same as the 5th element
 		// in the array
-		{"TestDynamicArray_Get", get_set_Helper(10), args{5}, 5},
+		{"TestDynamicArray_Get", Get_set_helper(10), args{5}, 5},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -83,7 +83,7 @@ func TestDynamicArray_Set(t *testing.T) {
 		// create an array with 10 elements and insert 10 elements
 		// set the 5th element to 10 and check if it is the same as the 5th element
 		// in the array
-		{"TestDynamicArraySet", get_set_Helper(10), args{5, 10}},
+		{"TestDynamicArraySet", Get_set_helper(10), args{5, 10}},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -105,7 +105,7 @@ func TestDynamicArray_IsEmpty(t *testing.T) {
 		// TODO: Add test cases.
 		// create an array with 10 elements and insert 10 elements
 		// check if the array is empty
-		{"TestDynamicArrayIsEmpty", get_set_Helper(10), false},
+		{"TestDynamicArrayIsEmpty", Get_set_helper(10), false},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -125,9 +125,9 @@ func TestDynamicArray_Size(t *testing.T) {
 		// TODO: Add test cases.
 		// create an array with 10 elements and insert 10 elements
 		// check if the size of the array is 10
-		{"TestDynamicArraySize", get_set_Helper(10), 10},
+		{"TestDynamicArraySize", Get_set_helper(10), 10},
 		// initialize with 0 capacity
-		{"TestDynamicArraySize", get_set_Helper(0), 10},
+		{"TestDynamicArraySize", Get_set_helper(0), 10},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -150,9 +150,9 @@ func TestDynamicArrayAdd(t *testing.T) {
 		// TODO: Add test cases.
 		// create an array with 10 elements and insert 10 elements
 		// add an element to the array and check if the size of the array is 11
-		{"TestDynamicArrayAdd", get_set_Helper(10), args{11}},
+		{"TestDynamicArrayAdd", Get_set_helper(10), args{11}},
 		// initialize with 0 capacity
-		{"TestDynamicArrayAdd", get_set_Helper(0), args{11}},
+		{"TestDynamicArrayAdd", Get_set_helper(0), args{11}},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -177,7 +177,7 @@ func TestDynamicArrayRemoveAt(t *testing.T) {
 		// TODO: Add test cases.
 		// create an array with 10 elements and insert 10 elements
 		// remove the 5th element and check if the size of the array is 9
-		{"TestDynamicArrayRemoveAt", get_set_Helper(10), args{5}},
+		{"TestDynamicArrayRemoveAt", Get_set_helper(10), args{5}},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -202,8 +202,8 @@ func TestDynamicArrayRemove(t *testing.T) {
 		// TODO: Add test cases.
 		// create an array with 10 elements and insert 10 elements
 		// remove the 5th element and check if the size of the array is 9
-		{"TestDynamicArrayRemove", get_set_Helper(10), args{5}, false},
-		{"TestDynamicArrayRemove", get_set_Helper(10), args{11}, true},
+		{"TestDynamicArrayRemove", Get_set_helper(10), args{5}, false},
+		{"TestDynamicArrayRemove", Get_set_helper(10), args{11}, true},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -223,7 +223,7 @@ func TestDynamicArrayToString(t *testing.T) {
 		// TODO: Add test cases.
 		// create an array with 10 elements and insert 10 elements
 		// check if the string representation of the array is correct
-		{"TestDynamicArrayToString", get_set_Helper(10), "[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]"},
+		{"TestDynamicArrayToString", Get_set_helper(10), "[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]"},
 		// empty array
 		{"TestDynamicArrayToString", empty_Helper(), "[]"},
 	}
@@ -244,7 +244,7 @@ func TestDynamicArray_Reverse(t *testing.T) {
 		// TODO: Add test cases.
 		// create an array with 10 elements and insert 10 elements
 		// reverse the array and check if the string representation of the array is correct
-		{"TestDynamicArrayReverse", get_set_Helper(10)},
+		{"TestDynamicArrayReverse", Get_set_helper(10)},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -299,8 +299,8 @@ func TestDynamicArray_Contains(t *testing.T) {
 		// TODO: Add test cases.
 		// create an array with 10 elements and insert 10 elements
 		// check if the array contains the 5th element
-		{"TestDynamicArrayContains", get_set_Helper(10), args{5}, true},
-		{"TestDynamicArrayContains", get_set_Helper(10), args{11}, false},
+		{"TestDynamicArrayContains", Get_set_helper(10), args{5}, true},
+		{"TestDynamicArrayContains", Get_set_helper(10), args{11}, false},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
