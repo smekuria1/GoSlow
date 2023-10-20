@@ -17,6 +17,7 @@ jobs:
           - doublyLinkedList
           - queue
           - stack
+          - unionfind
           # - dArray QSORT is failing
           # Add more packages as needed
 
