@@ -96,6 +96,18 @@ func TestNode_CompareTo(t *testing.T) {
 			args: args{value: 3},
 			want: -1,
 		},
+		{
+			name: "TestNode_CompareTo with int",
+			node: &Node[int]{value: values},
+			args: args{value: 1},
+			want: 1,
+		},
+		{
+			name: "TestNode_CompareTo with int",
+			node: &Node[int]{value: values},
+			args: args{value: 2},
+			want: 0,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -120,8 +132,98 @@ func createBST() *BST[int] {
 	bst.Add(7)
 	bst.Add(14)
 	bst.Add(13)
-	fmt.Println(bst.nodeCount)
 	return bst
+}
+
+func TestBST_Contains(t *testing.T) {
+	type args struct {
+		elem int
+	}
+	tests := []struct {
+		name string
+		bst  *BST[int]
+		args args
+		want bool
+	}{
+		{
+			name: "TestBST_Contains with int",
+			bst:  createBST(),
+			args: args{elem: 200},
+			want: false,
+		},
+		{
+			name: "TestBST_Contains with int",
+			bst:  createBST(),
+			args: args{elem: 14},
+			want: true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := tt.bst.Contains(tt.args.elem); got != tt.want {
+				t.Errorf("BST.Contains() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestBST_Remove(t *testing.T) {
+	type args struct {
+		elem int
+	}
+	tests := []struct {
+		name string
+		bst  *BST[int]
+		args args
+		want bool
+	}{
+		{
+			name: "TestBST_Remove with int",
+			bst:  createBST(),
+			args: args{elem: 200},
+			want: false,
+		},
+		{
+			name: "TestBST_Remove with int",
+			bst:  createBST(),
+			args: args{elem: 8},
+			want: true,
+		},
+
+		{
+			name: "TestBST_Remove with int",
+			bst:  createBST(),
+			args: args{elem: 1},
+			want: true,
+		},
+		{
+			name: "TestBST_Remove with int",
+			bst:  createBST(),
+			args: args{elem: 14},
+			want: true,
+		},
+		{
+			name: "TestBST_Remove with int",
+			bst:  createBST(),
+			args: args{elem: 4},
+			want: true,
+		},
+		{
+			name: "TestBST_Remove with int",
+			bst:  createBST(),
+			args: args{elem: 7},
+			want: true,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := tt.bst.Remove(tt.args.elem); got != tt.want {
+				t.Errorf("BST.Remove() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+
 }
 
 func TestBST_InorderTraversal(t *testing.T) {
@@ -150,4 +252,109 @@ func TestBST_InorderTraversal(t *testing.T) {
 		})
 	}
 
+}
+
+func TestBST_PreorderTraversal(t *testing.T) {
+	tests := []struct {
+		name string
+		bst  *BST[int]
+		want []int
+	}{
+		{
+			name: "TestBST_PreorderTraversal with int",
+			bst:  createBST(),
+			want: []int{8, 1, 6, 4, 7, 10, 14, 13},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := tt.bst.PreOrderTraversal(); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("BST.PreorderTraversal() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestBST_PostorderTraversal(t *testing.T) {
+	tests := []struct {
+		name string
+		bst  *BST[int]
+		want []int
+	}{
+		{
+			name: "TestBST_PostorderTraversal with int",
+			bst:  createBST(),
+			want: []int{4, 7, 6, 1, 13, 14, 10, 8},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := tt.bst.PostOrderTraversal(); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("BST.PostorderTraversal() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestBST_LevelorderTraversal(t *testing.T) {
+	tests := []struct {
+		name string
+		bst  *BST[int]
+		want []int
+	}{
+		{
+			name: "TestBST_LevelorderTraversal with int",
+			bst:  createBST(),
+			want: []int{8, 1, 10, 6, 14, 4, 7, 13},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := tt.bst.LevelOrderTraversal(); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("BST.LevelorderTraversal() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestBST_FindMin(t *testing.T) {
+	tests := []struct {
+		name string
+		bst  *BST[int]
+		want int
+	}{
+		{
+			name: "TestBST_FindMin with int",
+			bst:  createBST(),
+			want: 1,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got, _ := tt.bst.FindMin(); *got != tt.want {
+				t.Errorf("BST.FindMin() = %v, want %v", *got, tt.want)
+			}
+		})
+	}
+}
+
+func TestBST_FindMax(t *testing.T) {
+	tests := []struct {
+		name string
+		bst  *BST[int]
+		want int
+	}{
+		{
+			name: "TestBST_FindMax with int",
+			bst:  createBST(),
+			want: 14,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got, _ := tt.bst.FindMax(); *got != tt.want {
+				t.Errorf("BST.FindMax() = %v, want %v", *got, tt.want)
+			}
+		})
+	}
 }

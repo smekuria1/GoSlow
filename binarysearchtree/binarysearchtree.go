@@ -3,7 +3,10 @@ package binarysearchtree
 
 import (
 	"fmt"
+	"log"
 	"reflect"
+
+	"github.com/smekuria1/GoSlow/queue"
 )
 
 // Node represents a node in the binary search tree.
@@ -84,18 +87,17 @@ func (bst *BST[T]) contains(node *Node[T], elem T) bool {
 
 	cmp, err := node.CompareTo(elem)
 	if err != nil {
+		log.Fatal(err)
 		return false
 	}
 
-	if cmp < 0 {
-		return bst.contains(node.left, elem)
-	}
 	if cmp > 0 {
+		return bst.contains(node.left, elem)
+	} else if cmp < 0 {
 		return bst.contains(node.right, elem)
+	} else {
+		return true
 	}
-
-	return true
-
 }
 
 // private compare method to compare two elements
@@ -186,14 +188,6 @@ func (bst *BST[T]) remove(node *Node[T], elem T) *Node[T] {
 	return node
 }
 
-// Helper method to find the leftmost node (which has the smallest value)
-func (bst *BST[T]) findMin(node *Node[T]) *Node[T] {
-	for node.left != nil {
-		node = node.left
-	}
-	return node
-}
-
 // FindMax finds the maximum value in the binary tree
 func (bst *BST[T]) FindMax() (*T, error) {
 	if bst.IsEmpty() {
@@ -206,6 +200,14 @@ func (bst *BST[T]) FindMax() (*T, error) {
 func (bst *BST[T]) findMax(node *Node[T]) *Node[T] {
 	for node.right != nil {
 		node = node.right
+	}
+	return node
+}
+
+// Helper method to find the leftmost node (which has the smallest value)
+func (bst *BST[T]) findMin(node *Node[T]) *Node[T] {
+	for node.left != nil {
+		node = node.left
 	}
 	return node
 }
@@ -257,6 +259,74 @@ func (bst *BST[T]) inOrderTraversal(node *Node[T]) []T {
 	result = append(result, bst.inOrderTraversal(node.left)...)
 	result = append(result, node.value)
 	result = append(result, bst.inOrderTraversal(node.right)...)
+	return result
+
+}
+
+// PreOrderTraversal traverses the binary tree in pre order
+func (bst *BST[T]) PreOrderTraversal() []T {
+	return bst.preOrderTraversal(bst.root)
+}
+
+// private recursive method to traverse the binary tree in pre order
+func (bst *BST[T]) preOrderTraversal(node *Node[T]) []T {
+	if node == nil {
+		return []T{}
+	}
+
+	var result []T
+	result = append(result, node.value)
+	result = append(result, bst.preOrderTraversal(node.left)...)
+	result = append(result, bst.preOrderTraversal(node.right)...)
+	return result
+
+}
+
+// PostOrderTraversal traverses the binary tree in post order
+func (bst *BST[T]) PostOrderTraversal() []T {
+	return bst.postOrderTraversal(bst.root)
+}
+
+// private recursive method to traverse the binary tree in post order
+func (bst *BST[T]) postOrderTraversal(node *Node[T]) []T {
+	if node == nil {
+		return []T{}
+	}
+
+	var result []T
+	result = append(result, bst.postOrderTraversal(node.left)...)
+	result = append(result, bst.postOrderTraversal(node.right)...)
+	result = append(result, node.value)
+	return result
+
+}
+
+// LevelOrderTraversal traverses the binary tree in level order
+func (bst *BST[T]) LevelOrderTraversal() []T {
+	return bst.levelOrderTraversal(bst.root)
+}
+
+// private recursive method to traverse the binary tree in level order
+func (bst *BST[T]) levelOrderTraversal(node *Node[T]) []T {
+	if node == nil {
+		return []T{}
+	}
+
+	var result []T
+	queue := queue.NewQueue[*Node[T]]()
+	queue.Enqueue(node)
+
+	for !queue.IsEmpty() {
+		node := queue.Dequeue()
+		result = append(result, node.value)
+		if node.left != nil {
+			queue.Enqueue(node.left)
+		}
+		if node.right != nil {
+			queue.Enqueue(node.right)
+		}
+	}
+
 	return result
 
 }
