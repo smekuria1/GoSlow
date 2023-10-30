@@ -1,3 +1,5 @@
+// Package priorityqueue implements a priority queue.
+// uses my dynamicArray package for the heap
 package priorityqueue
 
 import (
