@@ -1,3 +1,5 @@
+// Package stack implements the stack data structure.
+// uses my doublyLinkedList package for the stack
 package stack
 
 import (
