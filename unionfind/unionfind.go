@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"log"
 
-	darray "github.com/smekuria1/GoSlow/darray"
+	"github.com/smekuria1/GoSlow/darray"
 )
 
 type UnionFind[T comparable] struct {
