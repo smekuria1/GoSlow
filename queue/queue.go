@@ -1,3 +1,5 @@
+// Package queue implements the queue data structure.
+// uses my doublyLinkedList package for the queue
 package queue
 
 import (
