@@ -1,3 +1,5 @@
+// Package UnionFind implements the union find data structure.
+// uses my dArray package for the union find
 package unionfind
 
 import (
