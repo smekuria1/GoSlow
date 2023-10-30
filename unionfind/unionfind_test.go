@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"testing"
 
-	darray "github.com/smekuria1/GoSlow/dArray"
+	"github.com/smekuria1/GoSlow/darray"
 )
 
 func TestNewUnionFind(t *testing.T) {

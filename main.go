@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"math/rand"
 
-	// darray "github.com/smekuria1/GoSlow/dArray"
-	doublyLinkedList "github.com/smekuria1/GoSlow/doublyLinkedList"
+	//"github.com/smekuria1/GoSlow/darray"
+	"github.com/smekuria1/GoSlow/doublyLinkedList"
 	"github.com/smekuria1/GoSlow/priorityqueue"
 	"github.com/smekuria1/GoSlow/stack"
 )

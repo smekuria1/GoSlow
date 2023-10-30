@@ -1,12 +1,12 @@
 // Package UnionFind implements the union find data structure.
-// uses my dArray package for the union find
+// uses my darray package for the union find
 package unionfind
 
 import (
 	"fmt"
 	"log"
 
-	darray "github.com/smekuria1/GoSlow/dArray"
+	darray "github.com/smekuria1/GoSlow/darray"
 )
 
 type UnionFind[T comparable] struct {
@@ -75,7 +75,7 @@ func (uf *UnionFind[T]) Size() int {
 }
 
 // Unify unifies the components containing elements p and q
-// not the best approach since i used my own dArray impl
+// not the best approach since i used my own darray impl
 func (uf *UnionFind[T]) Unify(p, q int) {
 	//check if elements are already connected
 	if uf.Connected(p, q) {
@@ -86,7 +86,7 @@ func (uf *UnionFind[T]) Unify(p, q int) {
 	root2 := uf.Find(q)
 
 	//merge smaller component/sets into larger one
-	//very convoluted because i used my dArray implementation
+	//very convoluted because i used my darray implementation
 	if uf.sz.Get(root1) < uf.sz.Get(root2) {
 		uf.sz.Set(root2, uf.sz.Get(root2)+uf.sz.Get(root1))
 		uf.id.Set(root2, root1)

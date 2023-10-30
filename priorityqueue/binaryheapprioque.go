@@ -5,7 +5,7 @@ package priorityqueue
 import (
 	"reflect"
 
-	darray "github.com/smekuria1/GoSlow/dArray"
+	darray "github.com/smekuria1/GoSlow/darray"
 )
 
 // BinaryHeapPQ is a priority queue implemented using a binary heap.
