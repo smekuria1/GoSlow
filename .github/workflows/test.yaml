@@ -20,6 +20,7 @@ jobs:
           - unionfind
           - binarysearchtree
           - hashtable
+          - priorityqueue
           # - darray QSORT is failing
           # Add more packages as needed
 
