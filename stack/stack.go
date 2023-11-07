@@ -59,6 +59,7 @@ func (s *Stack[T]) Clear() {
 
 // ToString returns a string representation of the stack.
 func (s *Stack[T]) ToString() string {
+	s.list.Reverse()
 	return s.list.ToString()
 }
 
