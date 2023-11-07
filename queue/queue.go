@@ -61,3 +61,8 @@ func (q *Queue[T]) Peek() T {
 func (q *Queue[T]) ToString() string {
 	return q.list.ToString()
 }
+
+// Contains returns true if the queue contains the given element, false otherwise.
+func (q *Queue[T]) Contains(val T) bool {
+	return q.list.Contains(val)
+}
