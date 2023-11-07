@@ -1,76 +1,104 @@
+// Copyright 2023 Solomon Mekuria.
+// Use of this source code is governed by a MIT-style
+// license that can be found in the LICENSE file.
+
+// GoSlow is combination of multiple packages that each represent popular
+// algorithms and data structures. The goal of this project is to provide
+// a simple and easy to use library for learning and teaching purposes.
+// The library is not intended to be used in production code.
 package main
 
 import (
 	"fmt"
 	"math/rand"
 
-	//"github.com/smekuria1/GoSlow/darray"
+	"github.com/smekuria1/GoSlow/binarysearchtree"
+	"github.com/smekuria1/GoSlow/darray"
 	"github.com/smekuria1/GoSlow/doublyLinkedList"
+	"github.com/smekuria1/GoSlow/hashtable"
 	"github.com/smekuria1/GoSlow/priorityqueue"
+	"github.com/smekuria1/GoSlow/queue"
 	"github.com/smekuria1/GoSlow/stack"
+	"github.com/smekuria1/GoSlow/unionfind"
 )
 
 func main() {
-	//array := darray.NewDynamicArray[int](2)
-	//var array []int
-	i := 0
-	//for i < 10 {
-	//array = append(array, rand.Intn(1000-0)+0)
-	//i += 1
-	//	}
-	// fmt.Println("Size: ", array.Size())
-	// fmt.Println("Array: ", array.ToString())
-
-	dl := doublyLinkedList.NewDoublyLinkedList[int]()
-
-	for i < 10 {
-		num := rand.Intn(1000-0) + 0
-		dl.Add(num)
-		//fmt.Printf("Added num: %v\n", num)
-		i += 1
-
+	//Example of using the binarysearchtree package
+	bst := binarysearchtree.NewBST[int]()
+	// add random numbers generated from 1 to 100
+	for i := 0; i < 10; i++ {
+		bst.Add(rand.Intn(100))
 	}
-	//fmt.Println("Size: ", dl.Size())
-	dl.Add(200)
-	// fmt.Println("LinkedList", dl.ToString())
-	// fmt.Println(dl.Contains(11111))
-	// fmt.Println(dl.RemoveAt(6))
+	// print the tree
+	fmt.Println("Binary Search Tree")
+	bst.ToString()
 
-	// dl.Reverse()
-	// fmt.Println("LinkedList", dl.ToString())
-
-	stack := stack.NewStack[int]()
-	j := 0
-	for j < 10 {
-		num := rand.Intn(1000-0) + 0
-		stack.Push(num)
-		// fmt.Printf("Added num: %v\n", num)
-		j += 1
-
+	//Example of using the darray package
+	dynamicarray := darray.NewDynamicArray[int]()
+	// add random numbers generated from 1 to 100
+	for i := 0; i < 10; i++ {
+		dynamicarray.Add(rand.Intn(100))
 	}
-	// fmt.Println("Size: ", stack.Size())
-	// fmt.Println("Stack", stack.ToString())
-	// fmt.Println(stack.Contains(11111))
-	// fmt.Println(stack.Peek())
-	// fmt.Println("Stack", stack.ToString())
+	// print the array
+	fmt.Println("Dynamic Array")
+	fmt.Println(dynamicarray.ToString())
 
+	//Example of using doublylinkedlist package
+	dll := doublyLinkedList.NewDoublyLinkedList[int]()
+	// add random numbers generated from 1 to 100
+	for i := 0; i < 10; i++ {
+		dll.Add(rand.Intn(100))
+	}
+	// print the list
+	fmt.Println("Doubly Linked List")
+	fmt.Println(dll.ToString())
+
+	// Example of using the hashtable package
+	ht := hashtable.NewHashTable[int, int](10, 0.75)
+	// add random numbers generated from 1 to 100
+	for i := 0; i < 10; i++ {
+		ht.Insert(i, rand.Intn(100))
+	}
+	// print the hashtable
+	fmt.Println("Hash Table")
+	fmt.Println(ht.ToString())
+
+	// Example of using priorityqueue package
 	pq := priorityqueue.NewBinaryHeapPQ[int]()
-	k := 0
-	for k < 10 {
-		num := rand.Intn(1000-0) + 0
-		pq.Add(num)
-		fmt.Printf("Added num: %v\n", num)
-		k += 1
-
+	// add random numbers generated from 1 to 100
+	for i := 0; i < 10; i++ {
+		pq.Add(rand.Intn(100))
 	}
-	pq.Add(400)
+	// print the priorityqueue
+	fmt.Println("Priority Queue")
+	fmt.Println(pq.ToString())
 
-	fmt.Println(pq.ToString())
-	fmt.Println(pq.IsMinHeap(0))
-	fmt.Println(pq.ToString())
-	fmt.Println(*pq.Peek())
-	fmt.Println(*pq.Poll())
-	fmt.Println(pq.ToString())
-	fmt.Println(pq.IsMinHeap(0))
-	fmt.Println(pq.Contains(400))
+	// Example of using queue package
+	q := queue.NewQueue[int]()
+	// add random numbers generated from 1 to 100
+	for i := 0; i < 10; i++ {
+		q.Enqueue(rand.Intn(100))
+	}
+	// print the queue
+	fmt.Println("Queue")
+	fmt.Println(q.ToString())
+
+	// Example of using stack package
+	s := stack.NewStack[int]()
+	// add random numbers generated from 1 to 100
+	for i := 0; i < 10; i++ {
+		s.Push(rand.Intn(100))
+	}
+	// print the stack
+	fmt.Println("Stack")
+	fmt.Println(s.ToString())
+
+	// Example of using unionfind package
+	uf := unionfind.NewUnionFind[int](11)
+	// union the numbers 1 to 6
+	fmt.Println("Union Find")
+	for i := 1; i < 6; i++ {
+		uf.Unify(i, i+1)
+	}
+
 }
