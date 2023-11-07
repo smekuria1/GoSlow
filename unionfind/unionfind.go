@@ -50,7 +50,7 @@ func (uf *UnionFind[T]) Find(p int) int {
 		uf.id.Set(p, root)
 		p = next
 	}
-	fmt.Println(uf.id.ToString())
+	//fmt.Println(uf.id.ToString())
 	return root
 }
 
@@ -99,8 +99,8 @@ func (uf *UnionFind[T]) Unify(p, q int) {
 
 	uf.numComponents--
 	// print all the roots and what they point to
-	fmt.Println(uf.id.ToString())
-	fmt.Println(uf.sz.ToString())
-	fmt.Println(uf.numComponents)
+	fmt.Printf("root of i%v \n", uf.id.ToString())
+	fmt.Printf("size of component%v \n", uf.sz.ToString())
+	fmt.Printf("number of components %v \n", uf.numComponents)
 
 }
