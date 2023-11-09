@@ -1,7 +1,7 @@
 
 
 # GoSlow
-[![Go Test](https://github.com/smekuria1/GoSlow/actions/workflows/test.yaml/badge.svg)](https://github.com/smekuria1/GoSlow/actions/workflows/test.yaml) [![Go Reference](https://pkg.go.dev/badge/github.com/smekuria1/GoSlow.svg)](https://pkg.go.dev/github.com/smekuria1/GoSlow) [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+[![Go Test](https://github.com/smekuria1/GoSlow/actions/workflows/test.yaml/badge.svg)](https://github.com/smekuria1/GoSlow/actions/workflows/test.yaml) [![Go Reference](https://pkg.go.dev/badge/github.com/smekuria1/GoSlow.svg)](https://pkg.go.dev/github.com/smekuria1/GoSlow) [![Go Report Card](https://goreportcard.com/badge/github.com/smekuria1/GoSlow)](https://goreportcard.com/report/github.com/smekuria1/GoSlow) [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 
 
 
