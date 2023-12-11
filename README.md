@@ -85,6 +85,11 @@ s := stack.NewStack[int]()
 import "github.com/smekuria1/GoSlow/unionfind"
 uf := unionfind.NewUnionFind[int](11)
 ```
+```go
+import "github.com/smekuria1/GoSlow/singlyLinkedList"
+sl := singlyLinkedList.NewSinglyLinkedList[int]()
+```
+
 ## Running Tests
 
 To run tests for all packages, run the following command in root folder
