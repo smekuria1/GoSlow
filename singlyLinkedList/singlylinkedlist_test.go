@@ -166,7 +166,7 @@ func TestSinglyLinked_Add(t *testing.T) {
 	}
 }
 
-func TestSinglyLinked_AddRemove(t *testing.T) {
+func TestSinglyLinked_Remove(t *testing.T) {
 
 	tests := []struct {
 		name string
@@ -190,6 +190,92 @@ func TestSinglyLinked_AddRemove(t *testing.T) {
 			// fmt.Println(tt.sl.ToString())
 			if err != nil && err.Error() != tt.want.Error() {
 				t.Errorf("SinglyLinkedList.Remove() = %v, want %v", err, tt.want)
+			}
+		})
+	}
+}
+
+func TestSinglyLinked_IndexOf(t *testing.T) {
+
+	type args struct {
+		elem int
+	}
+
+	tests := []struct {
+		name string
+		sl   *SinglyLinkedList[int]
+		args args
+		want int
+	}{
+		{
+			"TestingSinglyLinkedList_Indexof", get_set_Helper(10), args{4}, 4,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := tt.sl.IndexOf(tt.args.elem); got != tt.want {
+				t.Errorf("SinglyLinkedList.IndexOf() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestSinglyLinkedList_Get(t *testing.T) {
+	type args struct {
+		index int
+	}
+
+	tests := []struct {
+		name string
+		sl   *SinglyLinkedList[int]
+		want error
+		args args
+	}{
+
+		{
+			"TestSinglyLinkedList_Get", get_set_Helper(10), nil, args{3},
+		},
+		{
+			"TestSinglyLinkedList_Get", get_set_Helper(1), errors.New("illegal index"), args{3},
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			_, err := tt.sl.Get(tt.args.index)
+			// fmt.Println(tt.sl.ToString())
+			if err != nil && err.Error() != tt.want.Error() {
+				t.Errorf("SinglyLinkedList.Remove() = %v, want %v", err, tt.want)
+			}
+		})
+	}
+
+}
+
+func TestSinglyLinkedList_Contains(t *testing.T) {
+	type args struct {
+		elem int
+	}
+
+	tests := []struct {
+		name string
+		sl   *SinglyLinkedList[int]
+		args args
+		want bool
+	}{
+		{
+			"TestingSinglyLinkedList_Contains", get_set_Helper(10), args{4}, true,
+		},
+		{
+			"TestingSinglyLinkedList_Contains", get_set_Helper(10), args{19}, false,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := tt.sl.Contains(tt.args.elem); got != tt.want {
+				t.Errorf("SinglyLinkedList.Contains() = %v, want %vv", got, tt.want)
 			}
 		})
 	}

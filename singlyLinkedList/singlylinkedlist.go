@@ -2,6 +2,7 @@ package singlylinkedlist
 
 import (
 	"fmt"
+	"reflect"
 	"strings"
 )
 
@@ -156,4 +157,45 @@ func (sl *SinglyLinkedList[T]) Remove() (*T, error) {
 	temp.next = nil
 	sl.size -= 1
 	return &removed, nil
+}
+
+// IndexOf find the index of a particular value in the linked list, O(n)
+func (sl *SinglyLinkedList[T]) IndexOf(elem T) int {
+	index := 0
+	trav := sl.head
+
+	for trav != nil {
+		if isEqual(trav.val, elem) {
+			return index
+		}
+
+		trav = trav.next
+		index += 1
+	}
+	return -1
+}
+
+// slightly better compare using reflect
+func isEqual(x, y interface{}) bool {
+	return reflect.DeepEqual(x, y)
+}
+
+// Contains check if the value is contained within the linked list
+func (sl *SinglyLinkedList[T]) Contains(elem T) bool {
+	return sl.IndexOf(elem) != -1
+}
+
+// Get returns the value at a particular index, O(n)
+// returns node, err
+func (sl SinglyLinkedList[T]) Get(index int) (*T, error) {
+	if index < 0 || index > sl.size {
+		return nil, fmt.Errorf("illegal index")
+	}
+
+	trav := sl.head
+
+	for i := 0; i != index; i++ {
+		trav = trav.next
+	}
+	return &trav.val, nil
 }
