@@ -85,6 +85,8 @@ s := stack.NewStack[int]()
 import "github.com/smekuria1/GoSlow/unionfind"
 uf := unionfind.NewUnionFind[int](11)
 ```
+## Singly Linked List
+
 ```go
 import "github.com/smekuria1/GoSlow/singlyLinkedList"
 sl := singlyLinkedList.NewSinglyLinkedList[int]()
